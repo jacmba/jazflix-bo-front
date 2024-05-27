@@ -2,3 +2,39 @@
   justify-content: center;
   display: flex;
 }
+
+body {
+  text-align: center;
+}
+
+div {
+  text-align: center;
+  margin: auto;
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+
+label, input, button {
+  margin: 10px;
+  padding: 5px;
+}
+
+button:hover {
+  cursor: pointer;
+}
+
+.successMessage {
+  font-weight: bold;
+  color: darkgreen;
+}
+
+.errorMessage {
+  font-weight: bold;
+  color: chocolate;
+}
+
+footer {
+  bottom: 0;
+  position: absolute;
+  width: 90%;
+}
