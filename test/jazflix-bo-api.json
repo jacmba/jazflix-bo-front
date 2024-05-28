@@ -1,0 +1,254 @@
+{
+  "uuid": "a8953e84-3618-4942-8c5d-22a77a9242c3",
+  "lastMigration": 32,
+  "name": "Jazflix bo api",
+  "endpointPrefix": "",
+  "latency": 0,
+  "port": 5000,
+  "hostname": "",
+  "folders": [],
+  "routes": [
+    {
+      "uuid": "cd3ad014-eedb-4902-9548-44e2e0c4105a",
+      "type": "http",
+      "documentation": "",
+      "method": "get",
+      "endpoint": "user",
+      "responses": [
+        {
+          "uuid": "7604fa50-09e6-4086-898a-ee511fe8a128",
+          "body": "[\n  {\n    \"id\": \"c9534b1\",\n    \"name\": \"john.doe@gmail.com\",\n    \"enabled\": null\n  },\n  {\n    \"id\": \"c9534b2\",\n    \"name\": \"jane.doe@gmail.com\",\n    \"enabled\": null\n  }\n]",
+          "latency": 0,
+          "statusCode": 200,
+          "label": "",
+          "headers": [],
+          "bodyType": "INLINE",
+          "filePath": "",
+          "databucketID": "",
+          "sendFileAsBody": false,
+          "rules": [],
+          "rulesOperator": "OR",
+          "disableTemplating": false,
+          "fallbackTo404": false,
+          "default": true,
+          "crudKey": "id",
+          "callbacks": []
+        }
+      ],
+      "responseMode": null
+    },
+    {
+      "uuid": "a1daaa40-9ee9-4ad7-905d-973313bec449",
+      "type": "http",
+      "documentation": "",
+      "method": "get",
+      "endpoint": "user/:userid",
+      "responses": [
+        {
+          "uuid": "a5568384-9a25-4b9b-bca6-ce6e5150d6f5",
+          "body": "{\n  \"id\": \"c9534b1\",\n  \"name\": \"john.doe@gmail.com\",\n  \"enabled\": null\n}",
+          "latency": 0,
+          "statusCode": 200,
+          "label": "First user",
+          "headers": [],
+          "bodyType": "INLINE",
+          "filePath": "",
+          "databucketID": "",
+          "sendFileAsBody": false,
+          "rules": [
+            {
+              "target": "params",
+              "modifier": "userid",
+              "value": "c9534b1",
+              "invert": false,
+              "operator": "equals"
+            }
+          ],
+          "rulesOperator": "OR",
+          "disableTemplating": false,
+          "fallbackTo404": false,
+          "default": false,
+          "crudKey": "id",
+          "callbacks": []
+        },
+        {
+          "uuid": "3d65b5cb-3cdf-4864-b6bf-dd58e37a7fba",
+          "body": "{\n  \"id\": \"c9534b2\",\n  \"name\": \"jane.doe@gmail.com\",\n  \"enabled\": null\n}",
+          "latency": 0,
+          "statusCode": 200,
+          "label": "Second user",
+          "headers": [],
+          "bodyType": "INLINE",
+          "filePath": "",
+          "databucketID": "",
+          "sendFileAsBody": false,
+          "rules": [
+            {
+              "target": "params",
+              "modifier": "userid",
+              "value": "c9534b2",
+              "invert": false,
+              "operator": "equals"
+            }
+          ],
+          "rulesOperator": "OR",
+          "disableTemplating": false,
+          "fallbackTo404": false,
+          "default": false,
+          "crudKey": "id",
+          "callbacks": []
+        },
+        {
+          "uuid": "60f5517c-9a07-4f40-ad00-1a28007f8a58",
+          "body": "{\n  \"timestamp\": \"2024-01-01T22:00:00\",\n  \"status\": 404,\n  \"error\": \"Not Found\",\n  \"path\": \"/user/{{urlParam 'userid'}}\"\n}",
+          "latency": 0,
+          "statusCode": 404,
+          "label": "User not found",
+          "headers": [],
+          "bodyType": "INLINE",
+          "filePath": "",
+          "databucketID": "",
+          "sendFileAsBody": false,
+          "rules": [],
+          "rulesOperator": "OR",
+          "disableTemplating": false,
+          "fallbackTo404": false,
+          "default": true,
+          "crudKey": "id",
+          "callbacks": []
+        }
+      ],
+      "responseMode": null
+    },
+    {
+      "uuid": "6b593491-5783-40bd-b611-7d16494b1b91",
+      "type": "http",
+      "documentation": "",
+      "method": "delete",
+      "endpoint": "user/:userid",
+      "responses": [
+        {
+          "uuid": "4d9e91ee-33b2-4e0e-a558-d7ff8f0028e6",
+          "body": "",
+          "latency": 0,
+          "statusCode": 204,
+          "label": "User successfully deleted",
+          "headers": [],
+          "bodyType": "INLINE",
+          "filePath": "",
+          "databucketID": "",
+          "sendFileAsBody": false,
+          "rules": [
+            {
+              "target": "params",
+              "modifier": "userid",
+              "value": "c9534b1",
+              "invert": false,
+              "operator": "equals"
+            },
+            {
+              "target": "params",
+              "modifier": "userid",
+              "value": "c9534b2",
+              "invert": false,
+              "operator": "equals"
+            }
+          ],
+          "rulesOperator": "OR",
+          "disableTemplating": false,
+          "fallbackTo404": false,
+          "default": false,
+          "crudKey": "id",
+          "callbacks": []
+        },
+        {
+          "uuid": "d09341a5-2c1d-4ba0-ba6f-b3154bd239a8",
+          "body": "{\n  \"timestamp\": \"2024-01-01T22:00:00\",\n  \"status\": 404,\n  \"error\": \"Not Found\",\n  \"path\": \"/user/{{urlParam 'userid'}}\"\n}",
+          "latency": 0,
+          "statusCode": 404,
+          "label": "User not found",
+          "headers": [],
+          "bodyType": "INLINE",
+          "filePath": "",
+          "databucketID": "",
+          "sendFileAsBody": false,
+          "rules": [],
+          "rulesOperator": "OR",
+          "disableTemplating": false,
+          "fallbackTo404": false,
+          "default": true,
+          "crudKey": "id",
+          "callbacks": []
+        }
+      ],
+      "responseMode": null
+    }
+  ],
+  "rootChildren": [
+    {
+      "type": "route",
+      "uuid": "cd3ad014-eedb-4902-9548-44e2e0c4105a"
+    },
+    {
+      "type": "route",
+      "uuid": "a1daaa40-9ee9-4ad7-905d-973313bec449"
+    },
+    {
+      "type": "route",
+      "uuid": "6b593491-5783-40bd-b611-7d16494b1b91"
+    }
+  ],
+  "proxyMode": false,
+  "proxyHost": "",
+  "proxyRemovePrefix": false,
+  "tlsOptions": {
+    "enabled": false,
+    "type": "CERT",
+    "pfxPath": "",
+    "certPath": "",
+    "keyPath": "",
+    "caPath": "",
+    "passphrase": ""
+  },
+  "cors": true,
+  "headers": [
+    {
+      "key": "Content-Type",
+      "value": "application/json"
+    },
+    {
+      "key": "Access-Control-Allow-Origin",
+      "value": "*"
+    },
+    {
+      "key": "Access-Control-Allow-Methods",
+      "value": "GET,POST,PUT,PATCH,DELETE,HEAD,OPTIONS"
+    },
+    {
+      "key": "Access-Control-Allow-Headers",
+      "value": "Content-Type, Origin, Accept, Authorization, Content-Length, X-Requested-With"
+    }
+  ],
+  "proxyReqHeaders": [
+    {
+      "key": "",
+      "value": ""
+    }
+  ],
+  "proxyResHeaders": [
+    {
+      "key": "",
+      "value": ""
+    }
+  ],
+  "data": [
+    {
+      "uuid": "ceab5f86-aa25-4344-9e35-ea8f0a8195b6",
+      "id": "0pze",
+      "name": "",
+      "documentation": "",
+      "value": ""
+    }
+  ],
+  "callbacks": []
+}
