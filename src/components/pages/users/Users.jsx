@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react"
-import { API_URL } from "../../../config"
 import { deleteUser, retrieveUsers } from "../../../services/users-service"
 import { Alert, Button, Modal } from "react-bootstrap"
 
