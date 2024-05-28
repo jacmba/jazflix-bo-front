@@ -12,10 +12,18 @@ const Users = () => {
   const [successAlertMsg, setSuccessAlertMsg] = useState('')
   const [showSuccessAlert, setShowSuccessAlert] = useState(false)
 
+  const [errorAlertMsg, setErrorAlertMsg] = useState('')
+  const [showErrorAlert, setShowErrorAlert] = useState(false)
+
   const loadUsers = async () => {
     setLoaded(true)
-    const result = await retrieveUsers()
-    setUsers(result)
+    try {
+      const result = await retrieveUsers()
+      setUsers(result)
+    } catch (e) {
+      console.error(e)
+      displayErrorAlert('There was an error loading users list. Check logs and try again')
+    }
   }
 
   const handleClose = () => setShowDeleteModal(false)
@@ -30,6 +38,12 @@ const Users = () => {
     setShowSuccessAlert(true)
   }
 
+  const hideErrorAlert = () => setShowErrorAlert(false)
+  const displayErrorAlert = msg => {
+    setErrorAlertMsg(msg)
+    setShowErrorAlert(true)
+  }
+
   const requestUserDelete = async () => {
     const user = userToDelete
     handleClose()
@@ -40,7 +54,7 @@ const Users = () => {
         users.filter(u => u.id !== user.id)
       )
     } else {
-      console.error('Error deleting user')
+      displayErrorAlert(`Error deleting user ${user.name}. Check the logs and try again`)
     }
   }
 
@@ -78,8 +92,12 @@ const Users = () => {
         onClose={hideSuccessAlert} dismissible>
         {successAlertMsg}
       </Alert>
+      <Alert key={'errorAlert'} variant="danger" show={showErrorAlert} 
+        onClose={hideErrorAlert} dismissible>
+        {errorAlertMsg}
+      </Alert>
       <Modal show={showDeleteModal} onHide={handleClose}>
-        <Modal.Header closeButton>
+        <Modal.Header>
           <Modal.Title>Delete user</Modal.Title>
         </Modal.Header>
         <Modal.Body>Are you sure you want to delete {userToDelete.name}?</Modal.Body>
