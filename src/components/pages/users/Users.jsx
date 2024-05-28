@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react"
 import { deleteUser, retrieveUsers } from "../../../services/users-service"
 import { Alert, Button, Modal } from "react-bootstrap"
+import { useNavigate } from "react-router-dom"
 
 const Users = () => {
   const [users, setUsers] = useState([])
@@ -14,6 +15,8 @@ const Users = () => {
 
   const [errorAlertMsg, setErrorAlertMsg] = useState('')
   const [showErrorAlert, setShowErrorAlert] = useState(false)
+
+  const navigate = useNavigate()
 
   const loadUsers = async () => {
     setLoaded(true)
@@ -58,12 +61,16 @@ const Users = () => {
     }
   }
 
+  const addUser = () => navigate('/users/new')
+
+  const editUser = id => navigate(`/users/${id}`)
+
   useEffect(() => {
     loadUsers()
   }, [loaded])
 
   return (
-    <div className="container">
+    <div className="container" data-testid="users-list-container">
       <h1>List of app users</h1>
       <table className="mt-5 table table-stripped">
         <thead>
@@ -76,11 +83,23 @@ const Users = () => {
         </thead>
         <tbody>
           {users.map(u => <tr key={u.id}>
-            <td>{u.name}</td>
-            <td><input className="form-checck-input" type="checkbox" disabled checked={u.enabled !== false} /></td>
-            <td><button className="btn btn-info">Edit</button></td>
+            <td data-testid="user-name-cell">{u.name}</td>
+            <td>
+              <input className="form-checck-input"
+                data-testid="user-enabled"
+                type="checkbox" disabled 
+                checked={u.enabled !== false} />
+            </td>
+            <td>
+              <button data-testid="user-edit" 
+                className="btn btn-info"
+                onClick={() => editUser(u.id)}>
+                Edit
+              </button>
+            </td>
             <td>
               <button className="btn btn-danger" data-bs-toggle="modal"
+                data-testid='user-delete'
                 data-bs-target="#deleteModal" onClick={() => handleOpen(u)}>
                 Delete
               </button>
@@ -89,30 +108,32 @@ const Users = () => {
         </tbody>
       </table>
       <Alert key={'successAlert'} variant="success" show={showSuccessAlert} 
-        onClose={hideSuccessAlert} dismissible>
+        onClose={hideSuccessAlert} dismissible data-testid="success-alert">
         {successAlertMsg}
       </Alert>
       <Alert key={'errorAlert'} variant="danger" show={showErrorAlert} 
-        onClose={hideErrorAlert} dismissible>
+        onClose={hideErrorAlert} dismissible data-testid="error-alert">
         {errorAlertMsg}
       </Alert>
-      <Modal show={showDeleteModal} onHide={handleClose}>
+      <Modal show={showDeleteModal} onHide={handleClose} data-testid="delete-modal">
         <Modal.Header>
           <Modal.Title>Delete user</Modal.Title>
         </Modal.Header>
         <Modal.Body>Are you sure you want to delete {userToDelete.name}?</Modal.Body>
         <Modal.Footer>
-          <Button variant="secondary" onClick={handleClose}>
+          <Button variant="secondary" onClick={handleClose} data-testid="delete-close-btn">
             Close
           </Button>
-          <Button variant="danger" onClick={requestUserDelete}>
+          <Button variant="danger" onClick={requestUserDelete} data-testid="delete-confirm-btn">
             Delete
           </Button>
         </Modal.Footer>
       </Modal>
 
       <div className="mt-5">
-        <button className="btn btn-success">Add new user</button>
+        <button className="btn btn-success" onClick={addUser}>
+          Add new user
+        </button>
       </div>
     </div>
   )

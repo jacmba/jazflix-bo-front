@@ -3,6 +3,8 @@ import './App.css';
 import Logo from './components/common/Logo';
 import Home from './components/pages/home/Home';
 import Users from './components/pages/users/Users';
+import NewUser from './components/pages/users/NewUser'
+import EditUser from './components/pages/users/EditUser'
 
 function App() {
   return (
@@ -12,6 +14,8 @@ function App() {
         <Routes>
           <Route path='/' Component={Home} />
           <Route path='/users' Component={Users} />
+          <Route path='/users/new' Component={NewUser} />
+          <Route path='/users/:id' Component={EditUser} />
         </Routes>
       </BrowserRouter>
     </div>
