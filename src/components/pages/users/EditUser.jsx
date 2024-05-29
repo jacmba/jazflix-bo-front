@@ -1,10 +1,15 @@
 import UserForm from "./UserForm"
 
 const EditUser = () => {
+
+  const handleSubmit = (username, isEnabled) => {
+    console.log({username, isEnabled})
+  }
+
   return (
     <div className="container" data-testid="edit-user-container">
       Edit user
-      <UserForm></UserForm>
+      <UserForm cb={handleSubmit}></UserForm>
     </div>
   )
 }
