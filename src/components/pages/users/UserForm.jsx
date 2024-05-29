@@ -45,7 +45,7 @@ const UserForm = ({
             <Form.Label>User name (email address)</Form.Label>
             <Form.Control type="email"
               placeholder="Enter your email address"
-              defaultValue={username}
+              value={username}
               required
               onChange={handleNameChange}
               data-testid="user-name-input"/>
