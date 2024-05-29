@@ -117,7 +117,11 @@ describe('Test Users component', () => {
 
     fireEvent.click(confirm)
     const alertWin = await screen.findByTestId('success-alert')
-    expect(modal).not.toBeInTheDocument()
+
+    await waitFor(() => {
+      expect(modal).not.toBeInTheDocument()
+    })
+    
     expect(alertWin).toHaveClass('alert-success')
     expect(alertWin.innerHTML).toContain('User john@foo.bar successfully deleted')
   })
@@ -135,7 +139,11 @@ describe('Test Users component', () => {
 
     fireEvent.click(confirm)
     const alertWin = await screen.findByTestId('error-alert')
-    expect(modal).not.toBeInTheDocument()
+
+    await waitFor(() => {
+      expect(modal).not.toBeInTheDocument()
+    })
+
     expect(alertWin).toHaveClass('alert-danger')
     expect(alertWin.innerHTML).toContain('Error deleting user jane@foo.bar')
   })
