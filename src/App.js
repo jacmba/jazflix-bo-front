@@ -8,9 +8,9 @@ import EditUser from './components/pages/users/EditUser'
 
 function App() {
   return (
-    <div className="container">
-      <Logo />
+    <div className="container">      
       <BrowserRouter>
+        <Logo />
         <Routes>
           <Route path='/' Component={Home} />
           <Route path='/users' Component={Users} />
