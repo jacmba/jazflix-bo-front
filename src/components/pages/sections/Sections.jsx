@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react"
 import { retrieveAllSections } from "../../../services/sections-service"
 import { Button } from "react-bootstrap"
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 
 const Sections = () => {
 
@@ -34,7 +35,10 @@ const Sections = () => {
             sections
               .map(s => (
                 <tr data-testid="section-table-row" key={s.id}>
-                  <td>{s.icon}</td>
+                  <td>
+                    <span class="iconify" data-icon={s.icon} />
+                    <span>{s.icon}</span>
+                  </td>
                   <td>{s.title}</td>
                   <td>{s.to}</td>
                   <td>{s.order}</td>

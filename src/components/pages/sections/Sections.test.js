@@ -8,13 +8,22 @@ jest.mock('../../../services/sections-service')
 jest.mock('react-router-dom')
 const navigate = jest.fn()
 
+const verifyIcon = ({children}, expIcon) => {
+  const [icon, text] = children
+
+  expect(icon).toHaveAttribute('data-icon', expIcon)
+  expect(icon).toHaveClass('iconify')
+  expect(text.innerHTML).toBe(expIcon)
+}
+
 const verifyCells = (row, {expIcon, expTitle, expTo, expOrder}) => {
   const {children} = row
   const [icon, title, to, order] = children
-  expect(icon.innerHTML).toBe(expIcon)
   expect(title.innerHTML).toBe(expTitle)
   expect(to.innerHTML).toBe(expTo)
   expect(order.innerHTML).toBe(expOrder)
+
+  verifyIcon(icon, expIcon)
 }
 
 describe('Sections', () => {

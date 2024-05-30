@@ -8,6 +8,7 @@ import EditUser from './components/pages/users/EditUser'
 import Sections from './components/pages/sections/Sections';
 
 function App() {
+
   return (
     <div className="container">      
       <BrowserRouter>
