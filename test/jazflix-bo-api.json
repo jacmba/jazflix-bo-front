@@ -211,6 +211,35 @@
         }
       ],
       "responseMode": null
+    },
+    {
+      "uuid": "a878a329-a4f7-49bb-abd0-69cf35956f5d",
+      "type": "http",
+      "documentation": "Get all sections",
+      "method": "get",
+      "endpoint": "section",
+      "responses": [
+        {
+          "uuid": "24a5dc75-8c0f-4dde-88d2-c69b62fee386",
+          "body": "[\n  {\n    \"id\": \"61e91a\",\n    \"icon\": \"mdi-home\",\n    \"title\": \"Inicio\",\n    \"to\": \"/\",\n    \"order\": 1\n  },\n  {\n    \"id\": \"61e91b\",\n    \"icon\": \"mdi-sword-cross\",\n    \"title\": \"Epic Movies\",\n    \"to\": \"/section/epic\",\n    \"order\": 2\n  },\n  {\n    \"id\": \"61e91c\",\n    \"icon\": \"mdi-television-classic\",\n    \"title\": \"Series\",\n    \"to\": \"/section/series\",\n    \"order\": 3\n  }\n]",
+          "latency": 0,
+          "statusCode": 200,
+          "label": "",
+          "headers": [],
+          "bodyType": "INLINE",
+          "filePath": "",
+          "databucketID": "",
+          "sendFileAsBody": false,
+          "rules": [],
+          "rulesOperator": "OR",
+          "disableTemplating": false,
+          "fallbackTo404": false,
+          "default": true,
+          "crudKey": "id",
+          "callbacks": []
+        }
+      ],
+      "responseMode": null
     }
   ],
   "rootChildren": [
@@ -229,6 +258,10 @@
     {
       "type": "route",
       "uuid": "1b6fa7cd-9d21-4fba-875d-9d004a3b73ac"
+    },
+    {
+      "type": "route",
+      "uuid": "a878a329-a4f7-49bb-abd0-69cf35956f5d"
     }
   ],
   "proxyMode": false,
