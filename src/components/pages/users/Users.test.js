@@ -84,6 +84,11 @@ describe('Test Users component', () => {
     const modal1 = await screen.findByTestId('dialog-modal')
     expect(modal1).toBeInTheDocument()
 
+    const dialogText = screen.queryByTestId('dialog-text')
+    expect(dialogText).toBeInTheDocument()
+    expect(dialogText.innerHTML)
+      .toBe('Are you sure you want to delete john@foo.bar?')
+
     const cancel1 = await screen.findByTestId('dialog-close-btn')
     fireEvent.click(cancel1)
     await waitFor(() => {
