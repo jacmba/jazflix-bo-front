@@ -1,7 +1,7 @@
-import { render, screen } from "@testing-library/react"
+import { fireEvent, render, screen, waitFor } from "@testing-library/react"
 import Sections from "./Sections"
 import { useNavigate } from "react-router-dom"
-import { retrieveAllSections } from "../../../services/sections-service"
+import { deleteSection, retrieveAllSections } from "../../../services/sections-service"
 
 jest.mock('../../../services/sections-service')
 
@@ -56,6 +56,8 @@ describe('Sections', () => {
     useNavigate.mockImplementation(() => navigate)
   })
 
+  deleteSection.mockResolvedValue(true)
+
   afterEach(() => {
     jest.restoreAllMocks()
   })
@@ -101,6 +103,44 @@ describe('Sections', () => {
       "expTitle": "Series",
       "expTo": "/sections/series",
       "expOrder": '3'
+    })
+  })
+
+  it('should display message aler when error on loading sections', async () => {
+    retrieveAllSections.mockResolvedValue(false)
+
+    render(<Sections />)
+
+    const alert = await screen.findByTestId('message-alert')
+    expect(alert).toHaveClass('alert-danger')
+    expect(alert.innerHTML).toContain('There was an error loading sections. Check your logs and try again')
+
+    const {firstChild} = alert
+    fireEvent.click(firstChild)
+
+    await waitFor(() => {
+      expect(alert).not.toBeInTheDocument()
+    })
+  })
+
+  it('should display dialog on delete click', async () => {
+    render(<Sections />)
+
+    const [deleteHome] = await screen.findAllByTestId('btn-delete-section')
+    fireEvent.click(deleteHome)
+
+    const dialog = await screen.findByTestId('dialog-modal')
+    const title = screen.getByTestId('dialog-title')
+    const text = screen.getByTestId('dialog-text')
+    const closeBtn = screen.getByTestId('dialog-close-btn')
+    
+    expect(title.innerHTML).toBe('Delete section')
+    expect(text.innerHTML).toBe('Are you sure you want to delete section Home?')
+
+    fireEvent.click(closeBtn)
+
+    await waitFor(() => {
+      expect(dialog).not.toBeInTheDocument()
     })
   })
 })

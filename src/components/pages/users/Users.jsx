@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react"
 import { deleteUser, retrieveUsers } from "../../../services/users-service"
-import { Alert } from "react-bootstrap"
 import { useNavigate } from "react-router-dom"
 import Dialog from '../../common/Dialog'
 import AlertMessage from '../../common/AlertMessage'
@@ -104,7 +103,7 @@ const Users = () => {
           </tr>)}
         </tbody>
       </table>
-      
+
       {
         showAlert &&
         <AlertMessage

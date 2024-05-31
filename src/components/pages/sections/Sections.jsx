@@ -2,17 +2,43 @@ import { useEffect, useState } from "react"
 import { retrieveAllSections } from "../../../services/sections-service"
 import { Button } from "react-bootstrap"
 import './Sections.css'
+import AlertMessage from '../../common/AlertMessage'
+import Dialog from '../../common/Dialog'
 
 const Sections = () => {
 
   const [sections, setSections] = useState([])
+  const [hasErrors, setHasErrors] = useState(false)
+  const [alertMessage, setAlertMessage] = useState('')
+  const [showAlert, setShowAlert] = useState(false)
+  const [showDeleteDialog, setShowDeleteDialog] = useState(false)
+  const [sectionToDelete, setSectionToDelete] = useState({})
 
   const loadSections = async () => {
     const data = await retrieveAllSections()
     if (data) {
       setSections(data)
+      setHasErrors(false)
+      hideAlert()
+    } else {
+      setHasErrors(true)
+      displayAlert('There was an error loading sections. Check your logs and try again')
     }
   }
+
+  const displayAlert = msg => {
+    setAlertMessage(msg)
+    setShowAlert(true)
+  }
+
+  const hideAlert = () => setShowAlert(false)
+
+  const handleDeleteClik = s => {
+    setSectionToDelete(s)
+    setShowDeleteDialog(true)
+  }
+
+  const handleDeleteCancel = () => setShowDeleteDialog(false)
 
   useEffect(() => {
     loadSections()
@@ -52,7 +78,8 @@ const Sections = () => {
                   <td>
                     <Button
                       data-testid="btn-delete-section"
-                      variant="danger">
+                      variant="danger"
+                      onClick={() => handleDeleteClik(s)}>
                       Delete
                     </Button>
                   </td>
@@ -61,6 +88,24 @@ const Sections = () => {
           }
         </tbody>
       </table>
+
+      {
+        showAlert &&
+        <AlertMessage
+          variant={hasErrors ? 'danger' : 'success'}
+          closeCallback={hideAlert}>
+          {alertMessage}
+        </AlertMessage>
+      }
+
+      {
+        showDeleteDialog &&
+        <Dialog
+          title="Delete section"
+          cancelCallback={handleDeleteCancel}>
+          Are you sure you want to delete section {sectionToDelete.title}?
+        </Dialog>
+      }
 
       <div className="mt-5">
         <Button variant="success">
