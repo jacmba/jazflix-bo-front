@@ -2,17 +2,10 @@ import { fireEvent, render, screen, waitFor } from "@testing-library/react"
 import Dialog from "./Dialog"
 
 describe('Dialog component', () => {
-
-  it('should not display dialog by default', () => {
-    render(<Dialog />)
-
-    const dialog = screen.queryByTestId('dialog-modal')
-    expect(dialog).not.toBeInTheDocument()
-  })
-
+  
   it('should open dialog modal', () => {
     render(
-      <Dialog showDefault={true}
+      <Dialog
         title="Test Dialog"
         text="This is a test dialog" />
     )
@@ -40,7 +33,7 @@ describe('Dialog component', () => {
 
   it('should render accept button with custom label and class', () => {
     render(
-      <Dialog showDefault={true}
+      <Dialog
         acceptCaption="Click here!"
         acceptClass="danger" />
     )
@@ -51,15 +44,14 @@ describe('Dialog component', () => {
   })
 
   it('should close dialog when clicking on close button', async () => {
-    render(<Dialog showDefault={true} />)
+    const callback = jest.fn()
 
-    const dialog = screen.getByTestId('dialog-modal')
+    render(<Dialog cancelCallback={callback} />)
+
     const button = screen.getByTestId('dialog-close-btn')
     fireEvent.click(button)
 
-    await waitFor(() => {
-      expect(dialog).not.toBeInTheDocument()
-    })
+    expect(callback).toHaveBeenCalled()
   })
 
   it('should close dialog and invoke callback when clicking accept', async () => {
@@ -67,13 +59,9 @@ describe('Dialog component', () => {
 
     render(<Dialog showDefault={true} acceptCallback={callback} />)
 
-    const dialog = screen.getByTestId('dialog-modal')
     const button = screen.getByTestId('dialog-accept-btn')
     fireEvent.click(button)
 
     expect(callback).toHaveBeenCalled()
-    await waitFor(() => {
-      expect(dialog).not.toBeInTheDocument()
-    })
   })
 })

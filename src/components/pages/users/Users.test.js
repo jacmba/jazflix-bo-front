@@ -77,14 +77,14 @@ describe('Test Users component', () => {
     const [deleteButton1, deleteButton2] = 
       await screen.findAllByTestId('user-delete')
 
-    expect(screen.queryByTestId('delete-modal')).not.toBeInTheDocument()
+    expect(screen.queryByTestId('dialog-modal')).not.toBeInTheDocument()
     
     fireEvent.click(deleteButton1)
 
-    const modal1 = await screen.findByTestId('delete-modal')
+    const modal1 = await screen.findByTestId('dialog-modal')
     expect(modal1).toBeInTheDocument()
 
-    const cancel1 = await screen.findByTestId('delete-close-btn')
+    const cancel1 = await screen.findByTestId('dialog-close-btn')
     fireEvent.click(cancel1)
     await waitFor(() => {
       expect(modal1).not.toBeInTheDocument()
@@ -93,10 +93,10 @@ describe('Test Users component', () => {
 
     fireEvent.click(deleteButton2)
 
-    const modal2 = await screen.findByTestId('delete-modal')
+    const modal2 = await screen.findByTestId('dialog-modal')
     expect(modal2).toBeInTheDocument()
 
-    const cancel2 = await screen.findByTestId('delete-close-btn')
+    const cancel2 = await screen.findByTestId('dialog-close-btn')
     fireEvent.click(cancel2)
     await waitFor(() => {
       expect(modal2).not.toBeInTheDocument()
@@ -112,8 +112,8 @@ describe('Test Users component', () => {
     expect(screen.queryByTestId('success-alert')).not.toBeInTheDocument()
 
     fireEvent.click(deleteBtn)
-    const modal = await screen.findByTestId('delete-modal')
-    const confirm = screen.queryByTestId('delete-confirm-btn')
+    const modal = await screen.findByTestId('dialog-modal')
+    const confirm = screen.queryByTestId('dialog-accept-btn')
 
     fireEvent.click(confirm)
     const alertWin = await screen.findByTestId('success-alert')
@@ -134,8 +134,8 @@ describe('Test Users component', () => {
     expect(screen.queryByTestId('error-alert')).not.toBeInTheDocument()
 
     fireEvent.click(deleteBtn)
-    const modal = await screen.findByTestId('delete-modal')
-    const confirm = screen.queryByTestId('delete-confirm-btn')
+    const modal = await screen.findByTestId('dialog-modal')
+    const confirm = screen.queryByTestId('dialog-accept-btn')
 
     fireEvent.click(confirm)
     const alertWin = await screen.findByTestId('error-alert')

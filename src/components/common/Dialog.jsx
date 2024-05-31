@@ -2,31 +2,28 @@ import { useState } from "react"
 import { Button, Modal } from "react-bootstrap"
 
 const Dialog = ({
-  showDefault,
   title,
   text,
   acceptCaption,
   acceptClass,
-  acceptCallback
+  acceptCallback,
+  cancelCallback
 }) => {
-
-  const [show, setShow] = useState(showDefault || false)
 
   const acceptBtnCaption = acceptCaption || 'Accept'
 
   const acceptBtnClass = acceptClass || 'primary'
 
   const handleClose = () => {
-    setShow(false)
+    cancelCallback()
   }
 
   const handleAccept = () => {
     acceptCallback()
-    setShow(false)
   }
   
   return (
-    <Modal show={show} onHide={handleClose} data-testid="dialog-modal">
+    <Modal show="true" onHide={handleClose} data-testid="dialog-modal">
       <Modal.Header>
         <Modal.Title data-testid="dialog-title">
           {title}

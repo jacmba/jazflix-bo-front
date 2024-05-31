@@ -2,6 +2,7 @@ import { useEffect, useState } from "react"
 import { deleteUser, retrieveUsers } from "../../../services/users-service"
 import { Alert, Button, Modal } from "react-bootstrap"
 import { useNavigate } from "react-router-dom"
+import Dialog from '../../common/Dialog'
 
 const Users = () => {
   const [users, setUsers] = useState([])
@@ -113,20 +114,13 @@ const Users = () => {
         onClose={hideErrorAlert} dismissible data-testid="error-alert">
         {errorAlertMsg}
       </Alert>
-      <Modal show={showDeleteModal} onHide={handleClose} data-testid="delete-modal">
-        <Modal.Header>
-          <Modal.Title>Delete user</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>Are you sure you want to delete {userToDelete.name}?</Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={handleClose} data-testid="delete-close-btn">
-            Close
-          </Button>
-          <Button variant="danger" onClick={requestUserDelete} data-testid="delete-confirm-btn">
-            Delete
-          </Button>
-        </Modal.Footer>
-      </Modal>
+      {showDeleteModal && <Dialog
+        title="Delete user"
+        text={`Are you sure you want to delete ${userToDelete.name}?`}
+        acceptCaption="Delete"
+        acceptClass="danger"
+        acceptCallback={requestUserDelete}
+        cancelCallback={handleClose} />}
 
       <div className="mt-5">
         <button className="btn btn-success" onClick={addUser}>
