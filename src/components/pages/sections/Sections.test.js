@@ -53,10 +53,10 @@ describe('Sections', () => {
       }
     ])
 
+    deleteSection.mockResolvedValue(true)
+
     useNavigate.mockImplementation(() => navigate)
   })
-
-  deleteSection.mockResolvedValue(true)
 
   afterEach(() => {
     jest.restoreAllMocks()
@@ -142,5 +142,32 @@ describe('Sections', () => {
     await waitFor(() => {
       expect(dialog).not.toBeInTheDocument()
     })
+  })
+
+  it('should delete secion when confirmed', async() => {
+    render(<Sections />)
+
+    const [deleteHome] = await screen.findAllByTestId('btn-delete-section')
+    const homeCell = screen.queryByText('home-icon')
+
+    expect(homeCell).toBeInTheDocument()
+
+    fireEvent.click(deleteHome)
+
+    const dialog = await screen.findByTestId('dialog-modal')
+    const button = screen.getByTestId('dialog-accept-btn')
+    fireEvent.click(button)
+
+    expect(deleteSection).toHaveBeenCalledWith('abc1')
+
+    const alert = await screen.findByTestId('message-alert')
+    expect(alert).toHaveClass('alert-success')
+    expect(alert.innerHTML).toContain('Section Home successfully deleted')
+
+    expect(dialog).not.toBeInTheDocument()
+
+    const rows = await screen.findAllByTestId('section-table-row')
+    expect(rows).toHaveLength(2)
+    expect(homeCell).not.toBeInTheDocument()
   })
 })

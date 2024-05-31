@@ -22,6 +22,7 @@ const Users = () => {
       const result = await retrieveUsers()
       setUsers(result)
       setHasErrors(false)
+      hideAlert()
     } catch (e) {
       console.error(e)
       setHasErrors(true)

@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import { retrieveAllSections } from "../../../services/sections-service"
+import { deleteSection, retrieveAllSections } from "../../../services/sections-service"
 import { Button } from "react-bootstrap"
 import './Sections.css'
 import AlertMessage from '../../common/AlertMessage'
@@ -26,6 +26,16 @@ const Sections = () => {
     }
   }
 
+  const requestDeletesection = async () => {
+    const result = await deleteSection(sectionToDelete.id)
+    if (result) {
+      setHasErrors(false)
+      setSections(sections.filter(s => s.id !== sectionToDelete.id))
+      displayAlert(`Section ${sectionToDelete.title} successfully deleted`)
+      console.log('Se caga la perra!')
+    }
+  }
+
   const displayAlert = msg => {
     setAlertMessage(msg)
     setShowAlert(true)
@@ -39,6 +49,11 @@ const Sections = () => {
   }
 
   const handleDeleteCancel = () => setShowDeleteDialog(false)
+
+  const handleDeleteConfirm = () => {
+    setShowDeleteDialog(false)
+    requestDeletesection()
+  }
 
   useEffect(() => {
     loadSections()
@@ -102,7 +117,10 @@ const Sections = () => {
         showDeleteDialog &&
         <Dialog
           title="Delete section"
-          cancelCallback={handleDeleteCancel}>
+          cancelCallback={handleDeleteCancel}
+          acceptCaption="Delete"
+          acceptClass="danger"
+          acceptCallback={handleDeleteConfirm}>
           Are you sure you want to delete section {sectionToDelete.title}?
         </Dialog>
       }
