@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react"
 import { retrieveAllSections } from "../../../services/sections-service"
 import { Button } from "react-bootstrap"
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import './Sections.css'
 
 const Sections = () => {
 

@@ -5,7 +5,6 @@ import { useNavigate } from "react-router-dom"
 
 const Users = () => {
   const [users, setUsers] = useState([])
-  const [loaded, setLoaded] = useState(false)
 
   const [showDeleteModal, setShowDeleteModal] = useState(false)
   const [userToDelete, setDeleteUser] = useState({})
@@ -19,7 +18,6 @@ const Users = () => {
   const navigate = useNavigate()
 
   const loadUsers = async () => {
-    setLoaded(true)
     try {
       const result = await retrieveUsers()
       setUsers(result)
@@ -67,7 +65,7 @@ const Users = () => {
 
   useEffect(() => {
     loadUsers()
-  }, [loaded])
+  }, [])
 
   return (
     <div className="container" data-testid="users-list-container">
