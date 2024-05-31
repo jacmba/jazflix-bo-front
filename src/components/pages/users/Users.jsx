@@ -3,6 +3,7 @@ import { deleteUser, retrieveUsers } from "../../../services/users-service"
 import { Alert } from "react-bootstrap"
 import { useNavigate } from "react-router-dom"
 import Dialog from '../../common/Dialog'
+import AlertMessage from '../../common/AlertMessage'
 
 const Users = () => {
   const [users, setUsers] = useState([])
@@ -10,11 +11,10 @@ const Users = () => {
   const [showDeleteModal, setShowDeleteModal] = useState(false)
   const [userToDelete, setDeleteUser] = useState({})
 
-  const [successAlertMsg, setSuccessAlertMsg] = useState('')
-  const [showSuccessAlert, setShowSuccessAlert] = useState(false)
+  const [alertMsg, setAlertMsg] = useState('')
+  const [showAlert, setShowAlert] = useState(false)
 
-  const [errorAlertMsg, setErrorAlertMsg] = useState('')
-  const [showErrorAlert, setShowErrorAlert] = useState(false)
+  const [hasErrors, setHasErrors] = useState(false)
 
   const navigate = useNavigate()
 
@@ -22,9 +22,11 @@ const Users = () => {
     try {
       const result = await retrieveUsers()
       setUsers(result)
+      setHasErrors(false)
     } catch (e) {
       console.error(e)
-      displayErrorAlert('There was an error loading users list. Check logs and try again')
+      setHasErrors(true)
+      displayAlert('There was an error loading users list. Check logs and try again')
     }
   }
 
@@ -34,16 +36,10 @@ const Users = () => {
     setShowDeleteModal(true)
   }
 
-  const hideSuccessAlert = () => setShowSuccessAlert(false)
-  const displaySuccessAlert = msg => {
-    setSuccessAlertMsg(msg)
-    setShowSuccessAlert(true)
-  }
-
-  const hideErrorAlert = () => setShowErrorAlert(false)
-  const displayErrorAlert = msg => {
-    setErrorAlertMsg(msg)
-    setShowErrorAlert(true)
+  const hideAlert = () => setShowAlert(false)
+  const displayAlert = msg => {
+    setShowAlert(true)
+    setAlertMsg(msg)
   }
 
   const requestUserDelete = async () => {
@@ -51,12 +47,14 @@ const Users = () => {
     handleClose()
     const deleted = await deleteUser(user.id)
     if (deleted) {
-      displaySuccessAlert(`User ${user.name} successfully deleted`)
+      setHasErrors(false)
+      displayAlert(`User ${user.name} successfully deleted`)
       setUsers(
         users.filter(u => u.id !== user.id)
       )
     } else {
-      displayErrorAlert(`Error deleting user ${user.name}. Check the logs and try again`)
+      setHasErrors(true)
+      displayAlert(`Error deleting user ${user.name}. Check the logs and try again`)
     }
   }
 
@@ -106,14 +104,16 @@ const Users = () => {
           </tr>)}
         </tbody>
       </table>
-      <Alert key={'successAlert'} variant="success" show={showSuccessAlert} 
-        onClose={hideSuccessAlert} dismissible data-testid="success-alert">
-        {successAlertMsg}
-      </Alert>
-      <Alert key={'errorAlert'} variant="danger" show={showErrorAlert} 
-        onClose={hideErrorAlert} dismissible data-testid="error-alert">
-        {errorAlertMsg}
-      </Alert>
+      
+      {
+        showAlert &&
+        <AlertMessage
+          variant={hasErrors ? 'danger' : 'success'}
+          closeCallback={hideAlert}>
+            {alertMsg}
+        </AlertMessage>
+      }
+
       {
         showDeleteModal && <Dialog
           title="Delete user"

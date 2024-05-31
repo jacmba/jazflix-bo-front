@@ -114,14 +114,14 @@ describe('Test Users component', () => {
 
     const [deleteBtn,] = await screen.findAllByTestId('user-delete')
 
-    expect(screen.queryByTestId('success-alert')).not.toBeInTheDocument()
+    expect(screen.queryByTestId('message-alert')).not.toBeInTheDocument()
 
     fireEvent.click(deleteBtn)
     const modal = await screen.findByTestId('dialog-modal')
     const confirm = screen.queryByTestId('dialog-accept-btn')
 
     fireEvent.click(confirm)
-    const alertWin = await screen.findByTestId('success-alert')
+    const alertWin = await screen.findByTestId('message-alert')
 
     await waitFor(() => {
       expect(modal).not.toBeInTheDocument()
@@ -143,7 +143,7 @@ describe('Test Users component', () => {
     const confirm = screen.queryByTestId('dialog-accept-btn')
 
     fireEvent.click(confirm)
-    const alertWin = await screen.findByTestId('error-alert')
+    const alertWin = await screen.findByTestId('message-alert')
 
     await waitFor(() => {
       expect(modal).not.toBeInTheDocument()
