@@ -5,9 +5,9 @@ describe('Dialog component', () => {
   
   it('should open dialog modal', () => {
     render(
-      <Dialog
-        title="Test Dialog"
-        text="This is a test dialog" />
+      <Dialog title="Test Dialog">
+        This is a test dialog
+      </Dialog>
     )
 
     const dialog = screen.queryByTestId('dialog-modal')

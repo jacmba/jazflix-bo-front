@@ -1,13 +1,12 @@
-import { useState } from "react"
 import { Button, Modal } from "react-bootstrap"
 
 const Dialog = ({
   title,
-  text,
   acceptCaption,
   acceptClass,
   acceptCallback,
-  cancelCallback
+  cancelCallback,
+  children
 }) => {
 
   const acceptBtnCaption = acceptCaption || 'Accept'
@@ -30,7 +29,7 @@ const Dialog = ({
         </Modal.Title>
       </Modal.Header>
       <Modal.Body data-testid="dialog-text">
-        {text}
+        {children}
       </Modal.Body>
       <Modal.Footer>
         <Button variant="secondary"
