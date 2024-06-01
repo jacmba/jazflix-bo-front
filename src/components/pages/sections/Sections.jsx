@@ -4,6 +4,7 @@ import { Button } from "react-bootstrap"
 import './Sections.css'
 import AlertMessage from '../../common/AlertMessage'
 import Dialog from '../../common/Dialog'
+import { useNavigate } from "react-router-dom"
 
 const Sections = () => {
 
@@ -13,6 +14,8 @@ const Sections = () => {
   const [showAlert, setShowAlert] = useState(false)
   const [showDeleteDialog, setShowDeleteDialog] = useState(false)
   const [sectionToDelete, setSectionToDelete] = useState({})
+
+  const navigate = useNavigate()
 
   const loadSections = async () => {
     const data = await retrieveAllSections()
@@ -32,7 +35,9 @@ const Sections = () => {
       setHasErrors(false)
       setSections(sections.filter(s => s.id !== sectionToDelete.id))
       displayAlert(`Section ${sectionToDelete.title} successfully deleted`)
-      console.log('Se caga la perra!')
+    } else {
+      setHasErrors(true)
+      displayAlert(`Error deleting section ${sectionToDelete.title}`)
     }
   }
 
@@ -53,6 +58,14 @@ const Sections = () => {
   const handleDeleteConfirm = () => {
     setShowDeleteDialog(false)
     requestDeletesection()
+  }
+
+  const handleNewSection = () => {
+    navigate('/sections/new')
+  }
+
+  const handleEditSection = id => {
+    navigate(`/sections/${id}`)
   }
 
   useEffect(() => {
@@ -86,7 +99,8 @@ const Sections = () => {
                   <td>
                     <Button
                       data-testid="btn-edit-section"
-                      variant="info">
+                      variant="info"
+                      onClick={() => handleEditSection(s.id)}>
                       Edit
                     </Button>
                   </td>
@@ -126,7 +140,9 @@ const Sections = () => {
       }
 
       <div className="mt-5">
-        <Button variant="success">
+        <Button variant="success"
+          data-testid="add-section-btn"
+          onClick={handleNewSection}>
           Add new section
         </Button>
       </div>

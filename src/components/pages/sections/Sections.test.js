@@ -170,4 +170,53 @@ describe('Sections', () => {
     expect(rows).toHaveLength(2)
     expect(homeCell).not.toBeInTheDocument()
   })
+
+  it('should show alert on delete error', async () => {
+    deleteSection.mockResolvedValue(false)
+
+    render(<Sections />)
+
+    const [deleteHome] = await screen.findAllByTestId('btn-delete-section')
+    const homeCell = screen.getByText('home-icon')
+
+    fireEvent.click(deleteHome)
+
+    const dialog = await screen.findByTestId('dialog-modal')
+    const button = screen.getByTestId('dialog-accept-btn')
+
+    fireEvent.click(button)
+
+    expect(deleteSection).toHaveBeenCalledWith('abc1')
+
+    const alert = await screen.findByTestId('message-alert')
+    expect(alert).toHaveClass('alert-danger')
+    expect(alert.innerHTML).toContain('Error deleting section Home')
+
+    expect(dialog).not.toBeInTheDocument()
+
+    const rows = screen.getAllByTestId('section-table-row')
+    expect(rows).toHaveLength(3)
+    expect(homeCell).toBeInTheDocument()
+  })
+
+  it('should navigate to section creation screen when clicking add new section button', () => {
+    render(<Sections />)
+
+    const button = screen.queryByTestId('add-section-btn')
+    expect(button).toBeInTheDocument()
+
+    fireEvent.click(button)
+
+    expect(navigate).toHaveBeenCalledWith('/sections/new')
+  })
+
+  it('should navigate to section edition whtn clicking edit section button', async () => {
+    render(<Sections />)
+
+    const [button] = await screen.findAllByTestId('btn-edit-section')
+
+    fireEvent.click(button)
+
+    expect(navigate).toHaveBeenCalledWith('/sections/abc1')
+  })
 })

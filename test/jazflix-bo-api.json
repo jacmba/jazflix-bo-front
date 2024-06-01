@@ -11,7 +11,7 @@
     {
       "uuid": "cd3ad014-eedb-4902-9548-44e2e0c4105a",
       "type": "http",
-      "documentation": "",
+      "documentation": "Get all users",
       "method": "get",
       "endpoint": "user",
       "responses": [
@@ -40,7 +40,7 @@
     {
       "uuid": "a1daaa40-9ee9-4ad7-905d-973313bec449",
       "type": "http",
-      "documentation": "",
+      "documentation": "Get single user",
       "method": "get",
       "endpoint": "user/:userid",
       "responses": [
@@ -123,7 +123,7 @@
     {
       "uuid": "6b593491-5783-40bd-b611-7d16494b1b91",
       "type": "http",
-      "documentation": "",
+      "documentation": "Delete user",
       "method": "delete",
       "endpoint": "user/:userid",
       "responses": [
@@ -142,14 +142,14 @@
             {
               "target": "params",
               "modifier": "userid",
-              "value": "61e91a",
+              "value": "c9534b1",
               "invert": false,
               "operator": "equals"
             },
             {
               "target": "params",
               "modifier": "userid",
-              "value": "61e91b",
+              "value": "c9534b2",
               "invert": false,
               "operator": "equals"
             }
@@ -186,7 +186,7 @@
     {
       "uuid": "1b6fa7cd-9d21-4fba-875d-9d004a3b73ac",
       "type": "http",
-      "documentation": "",
+      "documentation": "Create new user",
       "method": "post",
       "endpoint": "user",
       "responses": [
@@ -195,7 +195,7 @@
           "body": "",
           "latency": 0,
           "statusCode": 201,
-          "label": "",
+          "label": "User successfully created",
           "headers": [],
           "bodyType": "INLINE",
           "filePath": "",
@@ -221,9 +221,247 @@
       "responses": [
         {
           "uuid": "24a5dc75-8c0f-4dde-88d2-c69b62fee386",
-          "body": "[\n  {\n    \"id\": \"61e91a\",\n    \"icon\": \"mdi-home\",\n    \"title\": \"Inicio\",\n    \"to\": \"/\",\n    \"order\": 1\n  },\n  {\n    \"id\": \"61e91b\",\n    \"icon\": \"mdi-sword-cross\",\n    \"title\": \"Epic Movies\",\n    \"to\": \"/section/epic\",\n    \"order\": 2\n  },\n  {\n    \"id\": \"61e91c\",\n    \"icon\": \"mdi-television-classic\",\n    \"title\": \"Series\",\n    \"to\": \"/section/series\",\n    \"order\": 3\n  }\n]",
+          "body": "[\n  {\n    \"id\": \"61e91a\",\n    \"icon\": \"mdi-home\",\n    \"title\": \"Home\",\n    \"to\": \"/\",\n    \"order\": 1\n  },\n  {\n    \"id\": \"61e91b\",\n    \"icon\": \"mdi-sword-cross\",\n    \"title\": \"Epic Movies\",\n    \"to\": \"/section/epic\",\n    \"order\": 2\n  },\n  {\n    \"id\": \"61e91c\",\n    \"icon\": \"mdi-television-classic\",\n    \"title\": \"Series\",\n    \"to\": \"/section/series\",\n    \"order\": 3\n  }\n]",
           "latency": 0,
           "statusCode": 200,
+          "label": "",
+          "headers": [],
+          "bodyType": "INLINE",
+          "filePath": "",
+          "databucketID": "",
+          "sendFileAsBody": false,
+          "rules": [],
+          "rulesOperator": "OR",
+          "disableTemplating": false,
+          "fallbackTo404": false,
+          "default": true,
+          "crudKey": "id",
+          "callbacks": []
+        }
+      ],
+      "responseMode": null
+    },
+    {
+      "uuid": "0e2f5507-157a-4ad6-8b66-5309aa55b81c",
+      "type": "http",
+      "documentation": "Delete section",
+      "method": "delete",
+      "endpoint": "section/:sectionid",
+      "responses": [
+        {
+          "uuid": "6cec2eb7-9753-42b2-a74d-997eb3742bef",
+          "body": "",
+          "latency": 0,
+          "statusCode": 204,
+          "label": "",
+          "headers": [],
+          "bodyType": "INLINE",
+          "filePath": "",
+          "databucketID": "",
+          "sendFileAsBody": false,
+          "rules": [
+            {
+              "target": "params",
+              "modifier": "sectionid",
+              "value": "61e91a",
+              "invert": false,
+              "operator": "equals"
+            },
+            {
+              "target": "params",
+              "modifier": "sectionid",
+              "value": "61e91b",
+              "invert": false,
+              "operator": "equals"
+            }
+          ],
+          "rulesOperator": "OR",
+          "disableTemplating": false,
+          "fallbackTo404": false,
+          "default": false,
+          "crudKey": "id",
+          "callbacks": []
+        },
+        {
+          "uuid": "e8b29244-8741-4c1d-abb4-ca9cac94f7cc",
+          "body": "{}",
+          "latency": 0,
+          "statusCode": 404,
+          "label": "Section not found",
+          "headers": [],
+          "bodyType": "INLINE",
+          "filePath": "",
+          "databucketID": "",
+          "sendFileAsBody": false,
+          "rules": [],
+          "rulesOperator": "OR",
+          "disableTemplating": false,
+          "fallbackTo404": false,
+          "default": true,
+          "crudKey": "id",
+          "callbacks": []
+        }
+      ],
+      "responseMode": null
+    },
+    {
+      "uuid": "eecc4860-22fc-419f-b2a0-337446112db9",
+      "type": "http",
+      "documentation": "Create new section",
+      "method": "post",
+      "endpoint": "section",
+      "responses": [
+        {
+          "uuid": "863be5b7-530f-4196-8f96-2a66884a5c8a",
+          "body": "{}",
+          "latency": 0,
+          "statusCode": 201,
+          "label": "Section successfully created",
+          "headers": [],
+          "bodyType": "INLINE",
+          "filePath": "",
+          "databucketID": "",
+          "sendFileAsBody": false,
+          "rules": [],
+          "rulesOperator": "OR",
+          "disableTemplating": false,
+          "fallbackTo404": false,
+          "default": true,
+          "crudKey": "id",
+          "callbacks": []
+        }
+      ],
+      "responseMode": null
+    },
+    {
+      "uuid": "83d2d63d-1e01-4727-8a0c-fa6841dae09a",
+      "type": "http",
+      "documentation": "Update section",
+      "method": "put",
+      "endpoint": "section/:sectionid",
+      "responses": [
+        {
+          "uuid": "d6158295-cb79-4faa-a648-4bc738e9244f",
+          "body": "",
+          "latency": 0,
+          "statusCode": 204,
+          "label": "Section successfully updated",
+          "headers": [],
+          "bodyType": "INLINE",
+          "filePath": "",
+          "databucketID": "",
+          "sendFileAsBody": false,
+          "rules": [
+            {
+              "target": "params",
+              "modifier": "sectionid",
+              "value": "61e91a",
+              "invert": false,
+              "operator": "equals"
+            },
+            {
+              "target": "params",
+              "modifier": "sectionid",
+              "value": "61e91b",
+              "invert": false,
+              "operator": "equals"
+            }
+          ],
+          "rulesOperator": "OR",
+          "disableTemplating": false,
+          "fallbackTo404": false,
+          "default": false,
+          "crudKey": "id",
+          "callbacks": []
+        },
+        {
+          "uuid": "5ce116bf-d015-4f35-93e1-49564bf99918",
+          "body": "",
+          "latency": 0,
+          "statusCode": 404,
+          "label": "Section not found",
+          "headers": [],
+          "bodyType": "INLINE",
+          "filePath": "",
+          "databucketID": "",
+          "sendFileAsBody": false,
+          "rules": [],
+          "rulesOperator": "OR",
+          "disableTemplating": false,
+          "fallbackTo404": false,
+          "default": true,
+          "crudKey": "id",
+          "callbacks": []
+        }
+      ],
+      "responseMode": null
+    },
+    {
+      "uuid": "c5a83afe-230c-41d8-9d9a-b155d28b4fb7",
+      "type": "http",
+      "documentation": "Get single section",
+      "method": "get",
+      "endpoint": "section/:sectionid",
+      "responses": [
+        {
+          "uuid": "b9bb9062-1879-4677-beca-ae4b090dff29",
+          "body": "{\n  \"id\": \"61e91a\",\n  \"icon\": \"mdi-home\",\n  \"title\": \"Home\",\n  \"to\": \"/\",\n  \"order\": 1\n}",
+          "latency": 0,
+          "statusCode": 200,
+          "label": "",
+          "headers": [],
+          "bodyType": "INLINE",
+          "filePath": "",
+          "databucketID": "",
+          "sendFileAsBody": false,
+          "rules": [
+            {
+              "target": "params",
+              "modifier": "sectionid",
+              "value": "61e91a",
+              "invert": false,
+              "operator": "equals"
+            }
+          ],
+          "rulesOperator": "OR",
+          "disableTemplating": false,
+          "fallbackTo404": false,
+          "default": false,
+          "crudKey": "id",
+          "callbacks": []
+        },
+        {
+          "uuid": "4eef66ec-2583-407f-b84c-9f8d2d411dbb",
+          "body": "{\n  \"id\": \"61e91b\",\n  \"icon\": \"mdi-sword-cross\",\n  \"title\": \"Epic Movies\",\n  \"to\": \"/section/epic\",\n  \"order\": 2\n}",
+          "latency": 0,
+          "statusCode": 200,
+          "label": "",
+          "headers": [],
+          "bodyType": "INLINE",
+          "filePath": "",
+          "databucketID": "",
+          "sendFileAsBody": false,
+          "rules": [
+            {
+              "target": "params",
+              "modifier": "sectionid",
+              "value": "61e91b",
+              "invert": false,
+              "operator": "equals"
+            }
+          ],
+          "rulesOperator": "OR",
+          "disableTemplating": false,
+          "fallbackTo404": false,
+          "default": false,
+          "crudKey": "id",
+          "callbacks": []
+        },
+        {
+          "uuid": "0823dc34-da83-4c9b-b963-74d18e14608b",
+          "body": "{\n  \"error\": \"not found\"\n}",
+          "latency": 0,
+          "statusCode": 404,
           "label": "",
           "headers": [],
           "bodyType": "INLINE",
@@ -245,6 +483,10 @@
   "rootChildren": [
     {
       "type": "route",
+      "uuid": "1b6fa7cd-9d21-4fba-875d-9d004a3b73ac"
+    },
+    {
+      "type": "route",
       "uuid": "cd3ad014-eedb-4902-9548-44e2e0c4105a"
     },
     {
@@ -257,11 +499,23 @@
     },
     {
       "type": "route",
-      "uuid": "1b6fa7cd-9d21-4fba-875d-9d004a3b73ac"
+      "uuid": "eecc4860-22fc-419f-b2a0-337446112db9"
     },
     {
       "type": "route",
       "uuid": "a878a329-a4f7-49bb-abd0-69cf35956f5d"
+    },
+    {
+      "type": "route",
+      "uuid": "c5a83afe-230c-41d8-9d9a-b155d28b4fb7"
+    },
+    {
+      "type": "route",
+      "uuid": "83d2d63d-1e01-4727-8a0c-fa6841dae09a"
+    },
+    {
+      "type": "route",
+      "uuid": "0e2f5507-157a-4ad6-8b66-5309aa55b81c"
     }
   ],
   "proxyMode": false,
@@ -307,14 +561,6 @@
       "value": ""
     }
   ],
-  "data": [
-    {
-      "uuid": "ceab5f86-aa25-4344-9e35-ea8f0a8195b6",
-      "id": "0pze",
-      "name": "",
-      "documentation": "",
-      "value": ""
-    }
-  ],
+  "data": [],
   "callbacks": []
 }
