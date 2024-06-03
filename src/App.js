@@ -6,6 +6,7 @@ import Users from './components/pages/users/Users';
 import NewUser from './components/pages/users/NewUser'
 import EditUser from './components/pages/users/EditUser'
 import Sections from './components/pages/sections/Sections';
+import NewSection from './components/pages/sections/NewSection';
 
 function App() {
 
@@ -21,6 +22,7 @@ function App() {
           <Route path='/users/:id' Component={EditUser} />
 
           <Route path='/sections' Component={Sections} />
+          <Route path='/sections/new' Component={NewSection} />
         </Routes>
       </BrowserRouter>
     </div>
