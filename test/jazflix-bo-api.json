@@ -478,6 +478,232 @@
         }
       ],
       "responseMode": null
+    },
+    {
+      "uuid": "596cf443-205d-4ca5-a89b-efb0aae95d7d",
+      "type": "http",
+      "documentation": "",
+      "method": "get",
+      "endpoint": "movies",
+      "responses": [
+        {
+          "uuid": "0979be80-bacf-41e7-a013-bbe0b7bdb81e",
+          "body": "[\n  {\n    \"id\": \"61e81\",\n    \"title\": \"300 El Origen de un Imperio\",\n    \"description\": \"Espartanos, el comienzo de todo\",\n    \"image\": \"https://d2id5w1nkzdswd.cloudfront.net/images/11346/poster/54955/s718.jpg\",\n    \"video\": \"300.el.origen.mp4\",\n    \"extra\": \"300,epic\"\n  },\n  {\n    \"id\": \"61e82\",\n    \"title\": \"Adiós pequeña, adiós\",\n    \"description\": \"\",\n    \"image\": \"https://m.media-amazon.com/images/I/71nqycSHx7L._SL1138_.jpg\",\n    \"video\": \"adios_pequena_adios.mp4\",\n    \"extra\": null\n  },\n  {\n    \"id\": \"61e83\",\n    \"title\": \"El Anticristo\",\n    \"description\": \"\",\n    \"image\": \"https://www.ecured.cu/images/c/c5/Anticristo666.jpeg\",\n    \"video\": \"anticristo.spanish.xvid.mp3.dvdrip.by.freak.team.mp4\",\n    \"extra\": null\n  },\n  {\n    \"id\": \"61e84\",\n    \"title\": \"Apocalypto\",\n    \"description\": \"\",\n    \"image\": \"https://pics.filmaffinity.com/apocalypto-732074347-mmed.jpg\",\n    \"video\": \"apocalypto.mkv\",\n    \"extra\": null\n  }\n]",
+          "latency": 0,
+          "statusCode": 200,
+          "label": "",
+          "headers": [],
+          "bodyType": "INLINE",
+          "filePath": "",
+          "databucketID": "",
+          "sendFileAsBody": false,
+          "rules": [],
+          "rulesOperator": "OR",
+          "disableTemplating": false,
+          "fallbackTo404": false,
+          "default": true,
+          "crudKey": "id",
+          "callbacks": []
+        }
+      ],
+      "responseMode": null
+    },
+    {
+      "uuid": "791cd29a-6f8b-4aac-9261-7136974a982a",
+      "type": "http",
+      "documentation": "",
+      "method": "get",
+      "endpoint": "movies/:movieid",
+      "responses": [
+        {
+          "uuid": "333ea691-b0a4-41ec-a9fe-f1945ad85fa3",
+          "body": "{\n  \"id\": \"61e81\",\n  \"title\": \"300 El Origen de un Imperio\",\n  \"description\": \"Espartanos, el comienzo de todo\",\n  \"image\": \"https://d2id5w1nkzdswd.cloudfront.net/images/11346/poster/54955/s718.jpg\",\n  \"video\": \"300.el.origen.mp4\",\n  \"extra\": \"300,epic\"\n}",
+          "latency": 0,
+          "statusCode": 200,
+          "label": "",
+          "headers": [],
+          "bodyType": "INLINE",
+          "filePath": "",
+          "databucketID": "",
+          "sendFileAsBody": false,
+          "rules": [
+            {
+              "target": "params",
+              "modifier": "movieid",
+              "value": "61e81",
+              "invert": false,
+              "operator": "equals"
+            }
+          ],
+          "rulesOperator": "OR",
+          "disableTemplating": false,
+          "fallbackTo404": false,
+          "default": false,
+          "crudKey": "id",
+          "callbacks": []
+        },
+        {
+          "uuid": "7a7c3390-5820-48af-aad6-312cab97390d",
+          "body": "{}",
+          "latency": 0,
+          "statusCode": 404,
+          "label": "",
+          "headers": [],
+          "bodyType": "INLINE",
+          "filePath": "",
+          "databucketID": "",
+          "sendFileAsBody": false,
+          "rules": [],
+          "rulesOperator": "OR",
+          "disableTemplating": false,
+          "fallbackTo404": false,
+          "default": true,
+          "crudKey": "id",
+          "callbacks": []
+        }
+      ],
+      "responseMode": null
+    },
+    {
+      "uuid": "5c43fd3b-7ec9-4ed4-b9a1-fb9f9fd5f5a9",
+      "type": "http",
+      "documentation": "",
+      "method": "post",
+      "endpoint": "movies",
+      "responses": [
+        {
+          "uuid": "4a1073f1-2408-4619-9b53-57c414af3cad",
+          "body": "{\n  \"id\": \"61e81\",\n  \"title\": \"300 El Origen de un Imperio\",\n  \"description\": \"Espartanos, el comienzo de todo\",\n  \"image\": \"https://d2id5w1nkzdswd.cloudfront.net/images/11346/poster/54955/s718.jpg\",\n  \"video\": \"300.el.origen.mp4\",\n  \"extra\": \"300,epic\"\n}",
+          "latency": 0,
+          "statusCode": 201,
+          "label": "",
+          "headers": [],
+          "bodyType": "INLINE",
+          "filePath": "",
+          "databucketID": "",
+          "sendFileAsBody": false,
+          "rules": [],
+          "rulesOperator": "OR",
+          "disableTemplating": false,
+          "fallbackTo404": false,
+          "default": true,
+          "crudKey": "id",
+          "callbacks": []
+        }
+      ],
+      "responseMode": null
+    },
+    {
+      "uuid": "55daff3e-1e2e-4908-9e9d-f94c2d64c5cf",
+      "type": "http",
+      "documentation": "",
+      "method": "put",
+      "endpoint": "movies/:movieid",
+      "responses": [
+        {
+          "uuid": "1a986f76-6552-4429-ba16-03a36a1974cd",
+          "body": "",
+          "latency": 0,
+          "statusCode": 204,
+          "label": "",
+          "headers": [],
+          "bodyType": "INLINE",
+          "filePath": "",
+          "databucketID": "",
+          "sendFileAsBody": false,
+          "rules": [
+            {
+              "target": "params",
+              "modifier": "movieid",
+              "value": "61e81",
+              "invert": false,
+              "operator": "equals"
+            }
+          ],
+          "rulesOperator": "OR",
+          "disableTemplating": false,
+          "fallbackTo404": false,
+          "default": false,
+          "crudKey": "id",
+          "callbacks": []
+        },
+        {
+          "uuid": "a33888e6-e783-47cf-873f-a3c0189be90f",
+          "body": "{}",
+          "latency": 0,
+          "statusCode": 404,
+          "label": "",
+          "headers": [],
+          "bodyType": "INLINE",
+          "filePath": "",
+          "databucketID": "",
+          "sendFileAsBody": false,
+          "rules": [],
+          "rulesOperator": "OR",
+          "disableTemplating": false,
+          "fallbackTo404": false,
+          "default": true,
+          "crudKey": "id",
+          "callbacks": []
+        }
+      ],
+      "responseMode": null
+    },
+    {
+      "uuid": "70e5140c-8d92-415d-a567-e1cb50ee3b11",
+      "type": "http",
+      "documentation": "",
+      "method": "delete",
+      "endpoint": "movies/:movieid",
+      "responses": [
+        {
+          "uuid": "027f906c-1762-49e3-b5c0-50c1ddff0c97",
+          "body": "",
+          "latency": 0,
+          "statusCode": 204,
+          "label": "",
+          "headers": [],
+          "bodyType": "INLINE",
+          "filePath": "",
+          "databucketID": "",
+          "sendFileAsBody": false,
+          "rules": [
+            {
+              "target": "params",
+              "modifier": "movieid",
+              "value": "61e81",
+              "invert": false,
+              "operator": "equals"
+            }
+          ],
+          "rulesOperator": "OR",
+          "disableTemplating": false,
+          "fallbackTo404": false,
+          "default": false,
+          "crudKey": "id",
+          "callbacks": []
+        },
+        {
+          "uuid": "68ef0ad0-1907-4833-977e-63a0bb9c01b0",
+          "body": "{}",
+          "latency": 0,
+          "statusCode": 404,
+          "label": "",
+          "headers": [],
+          "bodyType": "INLINE",
+          "filePath": "",
+          "databucketID": "",
+          "sendFileAsBody": false,
+          "rules": [],
+          "rulesOperator": "OR",
+          "disableTemplating": false,
+          "fallbackTo404": false,
+          "default": true,
+          "crudKey": "id",
+          "callbacks": []
+        }
+      ],
+      "responseMode": null
     }
   ],
   "rootChildren": [
@@ -516,6 +742,26 @@
     {
       "type": "route",
       "uuid": "0e2f5507-157a-4ad6-8b66-5309aa55b81c"
+    },
+    {
+      "type": "route",
+      "uuid": "596cf443-205d-4ca5-a89b-efb0aae95d7d"
+    },
+    {
+      "type": "route",
+      "uuid": "791cd29a-6f8b-4aac-9261-7136974a982a"
+    },
+    {
+      "type": "route",
+      "uuid": "5c43fd3b-7ec9-4ed4-b9a1-fb9f9fd5f5a9"
+    },
+    {
+      "type": "route",
+      "uuid": "55daff3e-1e2e-4908-9e9d-f94c2d64c5cf"
+    },
+    {
+      "type": "route",
+      "uuid": "70e5140c-8d92-415d-a567-e1cb50ee3b11"
     }
   ],
   "proxyMode": false,
