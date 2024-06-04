@@ -7,6 +7,7 @@ import NewUser from './components/pages/users/NewUser'
 import EditUser from './components/pages/users/EditUser'
 import Sections from './components/pages/sections/Sections';
 import NewSection from './components/pages/sections/NewSection';
+import EditSection from './components/pages/sections/EditSection';
 
 function App() {
 
@@ -23,6 +24,7 @@ function App() {
 
           <Route path='/sections' Component={Sections} />
           <Route path='/sections/new' Component={NewSection} />
+          <Route path='/sections/:id' Component={EditSection} />
         </Routes>
       </BrowserRouter>
     </div>
