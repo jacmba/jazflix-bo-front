@@ -1,12 +1,14 @@
 import { useState } from "react"
 import { Button, Col, Form, FormGroup, Row } from "react-bootstrap"
+import { useNavigate } from "react-router-dom"
 
 const SectionForm = ({
   defaultIcon,
   defaultTitle,
   defaultLinkTo,
   defaultOrder,
-  submitLabel
+  submitLabel,
+  submitCallback
 }) => {
 
   const [validated, seteValidated] = useState(false)
@@ -14,6 +16,8 @@ const SectionForm = ({
   const [title, setTitle] = useState(defaultTitle || '')
   const [linkTo, setLinkTo] = useState(defaultLinkTo || '')
   const [order, setOrder] = useState(defaultOrder || 999)
+
+  const navigate = useNavigate()
 
   const handleIconChange = evt => setIcon(evt.target.value)
 
@@ -30,7 +34,14 @@ const SectionForm = ({
       evt.stopPropagation()
       seteValidated(true)
     } else {
-      // Todo invoke callback and navigate
+      submitCallback({
+        icon,
+        title,
+        to: linkTo,
+        order: Number(order)
+      })
+
+      navigate('/sections')
     }
   }
 
@@ -72,7 +83,7 @@ const SectionForm = ({
           </FormGroup>
         </Row>
         <Row>
-          <FormGroup as={Col}className="mb-3" data-testid="form-description">
+          <FormGroup as={Col}className="mb-3" data-testid="form-link">
             <Form.Label>Description</Form.Label>
             <Form.Control 
               type="text"
@@ -81,6 +92,11 @@ const SectionForm = ({
               required
               data-testid="section-link-input"
               placeholder="Enter relative link" />
+            <Form.Control.Feedback
+              type="invalid"
+              data-testid="section-link-feedback">
+              Please provide a relative link
+            </Form.Control.Feedback>
           </FormGroup>
           <FormGroup as={Col} className="mb-3" data-testid="form-order">
             <Form.Label>Order</Form.Label>
@@ -90,7 +106,11 @@ const SectionForm = ({
               onChange={handleOrderChange}
               required
               data-testid="section-order-input" />
-            <Form.Control.Feedback></Form.Control.Feedback>
+            <Form.Control.Feedback
+              type="invalid"
+              data-testid="section-order-feedback">
+              Please set the order
+              </Form.Control.Feedback>
           </FormGroup>
         </Row>
         <Button type="submit" data-testid="submit-button">
