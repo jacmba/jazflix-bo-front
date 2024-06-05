@@ -1,6 +1,6 @@
-import { render, screen } from "@testing-library/react"
+import { fireEvent, render, screen, waitFor } from "@testing-library/react"
 import Movies from "./Movies"
-import { retrieveAllMovies } from "../../../services/movies-service"
+import { deleteMovie, retrieveAllMovies } from "../../../services/movies-service"
 import { useNavigate } from "react-router-dom"
 
 jest.mock('../../../services/movies-service')
@@ -30,6 +30,8 @@ describe('Movies List', () => {
       }
     ])
 
+    deleteMovie.mockResolvedValue(true)
+
     useNavigate.mockImplementation(() => navigate)
   })
 
@@ -54,6 +56,7 @@ describe('Movies List', () => {
     expect(button.innerHTML).toBe('Add new movie')
     expect(grid).toHaveClass('container-fluid')
     expect(button).toHaveClass('btn-success')
+    expect(button.innerHTML).toBe('Add new movie')
 
     expect(retrieveAllMovies).toHaveBeenCalledTimes(1)
   })
@@ -75,5 +78,34 @@ describe('Movies List', () => {
     const [img1, img2] = screen.getAllByTestId('movie-card-image')
     expect(img1).toHaveAttribute('src', 'http://foo.bar/test.jpg')
     expect(img2).toHaveAttribute('src', 'http://foo.bar/test2.jpg')
+  })
+
+  it('should remove card for deleted movie', async () => {
+    render(<Movies />)
+
+    const initialCards = await screen.findAllByTestId('movie-card')
+    expect(initialCards).toHaveLength(2)
+
+    const [deleteBtn] = screen.getAllByTestId('movie-card-delete-btn')
+    fireEvent.click(deleteBtn)
+
+    await screen.findByTestId('dialog-modal')
+    const confirmBtn = screen.getByTestId('dialog-accept-btn')
+    fireEvent.click(confirmBtn)
+
+    await expect(deleteMovie).toHaveReturned()
+
+    await waitFor(() => {
+      expect(screen.getAllByTestId('movie-card')).toHaveLength(1)
+    })
+  })
+
+  it('should navigate to new movie screen when clicking button', () => {
+    render(<Movies />)
+
+    const addBtn = screen.getByTestId('add-movie-btn')
+    fireEvent.click(addBtn)
+
+    expect(navigate).toHaveBeenCalledWith('/movies/new')
   })
 })

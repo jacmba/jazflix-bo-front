@@ -2,16 +2,27 @@ import { useEffect, useState } from "react"
 import { Button, Col, Container, Row } from "react-bootstrap"
 import { retrieveAllMovies } from "../../../services/movies-service"
 import MovieCard from "./MovieCard"
+import { useNavigate } from "react-router-dom"
 
 const Movies = () => {
 
   const [movies, setMovies] = useState([])
+
+  const navigate = useNavigate()
 
   const loadMovies = async () => {
     const data = await retrieveAllMovies()
     if (data) {
       setMovies(data)
     }
+  }
+
+  const handleDelete = id => {
+    setMovies(movies.filter(m => m.id !== id))
+  }
+
+  const handleNewMovie = () => {
+    navigate('/movies/new')
   }
 
   useEffect(() => {
@@ -31,14 +42,18 @@ const Movies = () => {
                   id={m.id}
                   title={m.title}
                   description={m.description}
-                  imgSrc={m.image} />
+                  imgSrc={m.image}
+                  onDelete={handleDelete} />
               </Col>
             ))
           }
         </Row>
       </Container>
 
-      <Button variant="success">
+      <Button
+        variant="success"
+        onClick={handleNewMovie}
+        data-testid="add-movie-btn">
         Add new movie
       </Button>
     </div>
