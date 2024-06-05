@@ -1,14 +1,19 @@
-import { render, screen } from "@testing-library/react"
+import { fireEvent, render, screen, waitFor } from "@testing-library/react"
 import { useNavigate } from "react-router-dom"
 import MovieCard from "./MovieCard"
+import { deleteMovie } from "../../../services/movies-service"
 
 jest.mock('react-router-dom')
 const navigate = jest.fn()
+
+jest.mock('../../../services/movies-service')
 
 describe('Movie Card', () => {
 
   beforeEach(() => {
     useNavigate.mockImplementation(() => navigate)
+
+    deleteMovie.mockResolvedValue(true)
   })
 
   afterEach(() => {
@@ -44,5 +49,55 @@ describe('Movie Card', () => {
 
     expect(editBtn).toHaveClass('btn-info')
     expect(deleteBtn).toHaveClass('btn-danger')
+
+    const alertMsg = screen.queryByTestId('message-alert')
+    expect(alertMsg).not.toBeInTheDocument()
+  })
+
+  it('should navigate to movie edit screen when clicking edit button', () => {
+    render(<MovieCard id="abc123" />)
+
+    const button = screen.getByTestId('movie-card-edit-btn')
+    fireEvent.click(button)
+
+    expect(navigate).toHaveBeenCalledWith('/movies/abc123')
+  })
+
+  it('should invoke movie delete and callback when clicking delete button', async () => {
+    const handleDelete = jest.fn()
+
+    render(<MovieCard
+      id="abc123"
+      onDelete={handleDelete} />)
+
+    const button = screen.getByTestId('movie-card-delete-btn')
+    fireEvent.click(button)
+
+    expect(deleteMovie).toHaveBeenCalledWith('abc123')
+    await waitFor(() => {
+      expect(handleDelete).toHaveBeenCalledWith('abc123')
+    })
+  })
+
+  it('should show alert on error while deleting movie', async () => {
+    deleteMovie.mockResolvedValue(false)
+
+    const handleDelete = jest.fn()
+
+    render(<MovieCard
+      id="abc123"
+      onDelete={handleDelete}
+    />)
+
+    const button = screen.getByTestId('movie-card-delete-btn')
+    fireEvent.click(button)
+
+    expect(deleteMovie).toHaveBeenCalledWith('abc123')
+
+    const alertMsg = await screen.findByTestId('message-alert')
+    expect(alertMsg).toHaveClass('alert-danger')
+    expect(alertMsg.innerHTML).toContain('Error deleting movie')
+
+    expect(handleDelete).not.toHaveBeenCalled()
   })
 })
