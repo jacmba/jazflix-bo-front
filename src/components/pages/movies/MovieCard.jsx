@@ -2,6 +2,7 @@ import { Button, Card, Col, Row } from "react-bootstrap"
 import { useNavigate } from "react-router-dom"
 import { deleteMovie } from "../../../services/movies-service"
 import AlertMessage from "../../common/AlertMessage"
+import Dialog from "../../common/Dialog"
 import { useState } from "react"
 
 const MovieCard = ({
@@ -13,6 +14,7 @@ const MovieCard = ({
 }) => {
 
   const [showError, setShowError] = useState(false)
+  const [showDialog, setShowDialog] = useState(false)
 
   const navigate = useNavigate()
 
@@ -20,7 +22,8 @@ const MovieCard = ({
     navigate('/movies/' + id)
   }
 
-  const handleDelete = async () => {
+  const confirmDelete = async () => {
+    setShowDialog(false)
     const result = await deleteMovie(id)
     if (result) {
       onDelete(id)
@@ -29,10 +32,16 @@ const MovieCard = ({
     }
   }
 
+  const handleDelete = () => {
+    setShowDialog(true)
+  }
+
+  const closeDialog = () => setShowDialog(false)
+
   const handleCloseAlert = () => setShowError(false)
 
   return (
-    <Card>
+    <Card data-testid="movie-card">
       <Card.Img
         variant="top"
         src={imgSrc}
@@ -63,6 +72,19 @@ const MovieCard = ({
             </Button>
           </Col>
         </Row>
+
+        {
+          showDialog &&
+          <Dialog
+            title="Delete movie"
+            acceptCaption="Delete"
+            acceptClass="danger"
+            acceptCallback={confirmDelete}
+            cancelCallback={closeDialog}>
+            Are you sure you want to delete {title}?
+            </Dialog>
+        }
+
         {
           showError &&
           <AlertMessage 

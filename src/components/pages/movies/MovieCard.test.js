@@ -52,6 +52,9 @@ describe('Movie Card', () => {
 
     const alertMsg = screen.queryByTestId('message-alert')
     expect(alertMsg).not.toBeInTheDocument()
+
+    const dialog = screen.queryByTestId('dialog-modal')
+    expect(dialog).not.toBeInTheDocument()
   })
 
   it('should navigate to movie edit screen when clicking edit button', () => {
@@ -68,15 +71,31 @@ describe('Movie Card', () => {
 
     render(<MovieCard
       id="abc123"
+      title="Test Movie"
       onDelete={handleDelete} />)
 
     const button = screen.getByTestId('movie-card-delete-btn')
     fireEvent.click(button)
 
+    const dialog = await screen.findByTestId('dialog-modal')
+
+    const dlgTitle = screen.getByTestId('dialog-title')
+    expect(dlgTitle.innerHTML).toBe('Delete movie')
+
+    const dlgText = screen.getByTestId('dialog-text')
+    expect(dlgText.innerHTML).toBe('Are you sure you want to delete Test Movie?')
+
+    const deleteBtn = screen.getByTestId('dialog-accept-btn')
+    expect(deleteBtn.innerHTML).toBe('Delete')
+    expect(deleteBtn).toHaveClass('btn-danger')
+    fireEvent.click(deleteBtn)
+
     expect(deleteMovie).toHaveBeenCalledWith('abc123')
     await waitFor(() => {
       expect(handleDelete).toHaveBeenCalledWith('abc123')
     })
+
+    expect(dialog).not.toBeInTheDocument()
   })
 
   it('should show alert on error while deleting movie', async () => {
@@ -92,6 +111,11 @@ describe('Movie Card', () => {
     const button = screen.getByTestId('movie-card-delete-btn')
     fireEvent.click(button)
 
+    const dialog = await screen.findByTestId('dialog-modal')
+
+    const deleteBtn = screen.getByTestId('dialog-accept-btn')
+    fireEvent.click(deleteBtn)
+
     expect(deleteMovie).toHaveBeenCalledWith('abc123')
 
     const alertMsg = await screen.findByTestId('message-alert')
@@ -99,5 +123,23 @@ describe('Movie Card', () => {
     expect(alertMsg.innerHTML).toContain('Error deleting movie')
 
     expect(handleDelete).not.toHaveBeenCalled()
+
+    expect(dialog).not.toBeInTheDocument()
+  })
+
+  it('should close dialog when cancelling', async () => {
+    render(<MovieCard />)
+
+    const deleteBtn = screen.getByTestId('movie-card-delete-btn')
+    fireEvent.click(deleteBtn)
+
+    const dialog = await screen.findByTestId('dialog-modal')
+
+    const cancelBtn = screen.getByTestId('dialog-close-btn')
+    fireEvent.click(cancelBtn)
+
+    await waitFor(() => {
+      expect(dialog).not.toBeInTheDocument()
+    })
   })
 })
