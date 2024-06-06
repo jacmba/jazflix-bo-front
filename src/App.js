@@ -9,6 +9,7 @@ import Sections from './components/pages/sections/Sections';
 import NewSection from './components/pages/sections/NewSection';
 import EditSection from './components/pages/sections/EditSection';
 import Movies from './components/pages/movies/Movies';
+import NewMovie from './components/pages/movies/NewMovie';
 
 function App() {
 
@@ -28,6 +29,7 @@ function App() {
           <Route path='/sections/:id' Component={EditSection} />
 
           <Route path='/movies' Component={Movies} />
+          <Route path='/movies/new' Component={NewMovie} />
         </Routes>
       </BrowserRouter>
     </div>

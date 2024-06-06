@@ -52,7 +52,10 @@ const MovieForm = ({
       <Form validated={validated} onSubmit={handleSubmit} noValidate>
         <Row>
           <Col>
-            <Image src={image} data-testid="movie-form-image" />
+            <Image
+              src={image}
+              width={300}
+              data-testid="movie-form-image" />
           </Col>
           <FormGroup as={Col}>
             <Form.Label>
