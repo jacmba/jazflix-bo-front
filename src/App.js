@@ -10,6 +10,7 @@ import NewSection from './components/pages/sections/NewSection';
 import EditSection from './components/pages/sections/EditSection';
 import Movies from './components/pages/movies/Movies';
 import NewMovie from './components/pages/movies/NewMovie';
+import EditMovie from './components/pages/movies/EditMovie';
 
 function App() {
 
@@ -30,6 +31,7 @@ function App() {
 
           <Route path='/movies' Component={Movies} />
           <Route path='/movies/new' Component={NewMovie} />
+          <Route path='/movies/:id' Component={EditMovie} />
         </Routes>
       </BrowserRouter>
     </div>
